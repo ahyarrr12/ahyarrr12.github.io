@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+int hitung_a_iteratif(const char *teks) {
+    int jumlah = 0;
+    for (int i = 0; teks[i] != '\0'; i++) {
+        if (teks[i] == 'a' || teks[i] == 'A') {
+            jumlah++;
+        }
+    }
+    return jumlah;
+}
+
+int main() {
+    char kalimat[100];
+
+    printf("Masukkan kalimat: ");
+    fgets(kalimat, sizeof(kalimat), stdin);
+
+    printf("Jumlah huruf 'a' = %d\n", hitung_a_iteratif(kalimat));
+    return 0;
+}
+
+//TC = O(n)
+//SC = O(1)
