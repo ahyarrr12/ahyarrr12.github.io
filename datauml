@@ -1,0 +1,167 @@
+@startuml
+title Activity Diagram Login - Sistem Parkir Digital Kampus
+
+|Admin Parkir|
+start
+:Buka Aplikasi Sistem Parkir;
+:Masukkan Username dan Password;
+:Klik Tombol Login;
+
+|Sistem|
+:Validasi Username dan Password;
+if (Data login valid?) then (Ya)
+  :Tampilkan Dashboard Admin;
+  stop
+else (Tidak)
+  :Tampilkan Pesan Login Gagal;
+endif
+
+|Admin Parkir|
+:Masukkan Username dan Password;
+:Klik Tombol Login;
+stop
+@enduml
+
+@startuml
+|Pengguna Parkir|
+start
+:Kendaraan Datang;
+:Scan Kartu RFID;
+
+|Sistem Parkir|
+:Baca Data RFID;
+:Validasi Kartu;
+if (Kartu terdaftar?) then (Ya)
+  :Cek Slot Parkir;
+  if (Slot tersedia?) then (Ya)
+    :Catat Waktu Masuk;
+    :Gate Terbuka;
+  else (Tidak)
+    :Tampilkan Pesan Parkir Penuh;
+    stop
+  endif
+else (Tidak)
+  :Tampilkan Pesan Akses Ditolak;
+  stop
+endif
+
+|Pengguna Parkir|
+:Masuk Area Parkir;
+:Parkir Kendaraan;
+stop
+@enduml
+
+@startuml
+title Activity Diagram Kelola Pengguna Parkir
+
+|Admin Parkir|
+start
+:Login Admin;
+:Masuk Menu Kelola Pengguna;
+
+repeat
+  :Pilih Aksi;
+  if (Tambah Pengguna?) then (Ya)
+    :Input Data Pengguna Baru;
+    |Sistem|
+    :Simpan Data Pengguna;
+  else (Tidak)
+    if (Ubah Pengguna?) then (Ya)
+      :Pilih Pengguna;
+      :Ubah Data Pengguna;
+      |Sistem|
+      :Update Data Pengguna;
+    else (Tidak)
+      if (Hapus Pengguna?) then (Ya)
+        :Pilih Pengguna;
+        :Konfirmasi Hapus;
+        |Sistem|
+        :Hapus Data Pengguna;
+      else (Tidak)
+        if (Lihat Daftar?) then (Ya)
+          |Sistem|
+          :Tampilkan Daftar Pengguna;
+        endif
+      endif
+    endif
+  endif
+
+  |Admin Parkir|
+  :Apakah Selesai Kelola Pengguna?;
+repeat while (Tidak)
+
+stop
+@enduml
+
+@startuml
+title Activity Diagram Kelola Kendaraan
+
+|Admin Parkir|
+start
+:Login Admin;
+:Masuk Menu Kelola Kendaraan;
+
+repeat
+  :Pilih Aksi;
+  if (Tambah Kendaraan?) then (Ya)
+    :Input Data Kendaraan Baru;
+    |Sistem|
+    :Simpan Data Kendaraan;
+  else (Tidak)
+    if (Ubah Kendaraan?) then (Ya)
+      :Pilih Kendaraan;
+      :Ubah Data Kendaraan;
+      |Sistem|
+      :Update Data Kendaraan;
+    else (Tidak)
+      if (Hapus Kendaraan?) then (Ya)
+        :Pilih Kendaraan;
+        :Konfirmasi Hapus;
+        |Sistem|
+        :Hapus Data Kendaraan;
+      else (Tidak)
+        if (Lihat Daftar?) then (Ya)
+          |Sistem|
+          :Tampilkan Daftar Kendaraan;
+        endif
+      endif
+    endif
+  endif
+
+  |Admin Parkir|
+  :Apakah Selesai Kelola Kendaraan?;
+repeat while (Tidak)
+
+stop
+@enduml
+
+
+@startuml
+title Activity Diagram Lihat Laporan Parkir
+
+|Admin Parkir|
+start
+:Login Admin;
+:Masuk Menu Laporan Parkir;
+
+|Sistem|
+:Ambil Data Parkir;
+
+|Admin Parkir|
+:Pilih Periode Laporan (Hari/Minggu/Bulan);
+
+|Sistem|
+:Generate Laporan;
+:Menampilkan Laporan Parkir;
+
+|Admin Parkir|
+if (Ingin Export?) then (Ya)
+  :Klik Export (PDF/Excel);
+  |Sistem|
+  :Ekspor Laporan;
+else (Tidak)
+  :Kembali ke Menu;
+endif
+
+stop
+@enduml
